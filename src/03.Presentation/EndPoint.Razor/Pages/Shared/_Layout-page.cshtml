@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - وبلاگ من</title>
+
+    <!-- Bootstrap 5 RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- فونت فارسی دلخواه (مثلاً وزیر یا ایران‌سنز) -->
+    <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+
+    <!-- استایل اختصاصی وبلاگ -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.7;
+        }
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .post-card {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        .footer {
+            background: #212529;
+            color: #adb5bd;
+            margin-top: 5rem;
+        }
+        .sidebar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+    </style>
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/">وبلاگ من</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Account/Profile"> خانه </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Posts">همه نوشته‌ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Account/About">درباره من</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Contact">تماس</a>
+                    </li>
+                </ul>
+
+                <form class="d-flex" asp-page="/Search" method="get">
+                    <input class="form-control me-2" type="search" name="query" placeholder="جستجو در نوشته‌ها..." aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- محتوای اصلی -->
+            <main class="col-lg-8">
+                @RenderBody()
+            </main>
+
+            <!-- سایدبار -->
+            <aside class="col-lg-4">
+                <div class="sidebar sticky-top" style="top: 100px;">
+                    <!-- درباره من کوتاه -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">درباره من</h5>
+                        <p class="small text-muted">
+                            سلام! من [نام شما] هستم. عاشق نوشتن و به اشتراک گذاشتن تجربه‌هام.
+                        </p>
+                    </div>
+
+                    <!-- دسته‌بندی‌ها -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">دسته‌بندی‌ها</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="/Category/Technology" class="text-decoration-none text-dark">تکنولوژی</a></li>
+                            <li><a href="/Category/Lifestyle" class="text-decoration-none text-dark">سبک زندگی</a></li>
+                            <li><a href="/Category/Programming" class="text-decoration-none text-dark">برنامه‌نویسی</a></li>
+                            <li><a href="/Category/Travel" class="text-decoration-none text-dark">سفر</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- تگ‌های محبوب -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">تگ‌های محبوب</h5>
+                        <a href="/Tag/asp-net-core" class="tag me-1 mb-2 d-inline-block">ASP.NET Core</a>
+                        <a href="/Tag/c-sharp" class="tag me-1 mb-2 d-inline-block">C#</a>
+                        <a href="/Tag/web-design" class="tag me-1 mb-2 d-inline-block">طراحی وب</a>
+                        <a href="/Tag/blazor" class="tag me-1 mb-2 d-inline-block">Blazor</a>
+                    </div>
+
+                    <!-- خبرنامه -->
+                    <div class="bg-light p-4 rounded">
+                        <h6>خبرنامه</h6>
+                        <p class="small">جدیدترین نوشته‌ها رو به ایمیلت بفرستم؟</p>
+                        <form asp-page="/Subscribe" method="post">
+                            <div class="input-group">
+                                <input type="email" class="form-control form-control-sm" placeholder="ایمیلت رو وارد کن" required>
+                                <button class="btn btn-primary btn-sm" type="submit">عضویت</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 text-center">
+        <div class="container">
+            <p class="mb-1">
+                © @DateTime.Now.Year - وبلاگ من | ساخته شده با
+                <i class="bi bi-heart-fill text-danger"></i> و
+                <a href="https://dotnet.microsoft.com" class="text-light text-decoration-none">ASP.NET Core</a>
+            </p>
+            <p class="small">
+                <a href="/Privacy" class="text-muted mx-2">حریم خصوصی</a> |
+                <a href="/Terms" class="text-muted mx-2">قوانین</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- اسکریپت‌های اختصاصی -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

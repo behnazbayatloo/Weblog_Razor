@@ -1,0 +1,40 @@
+﻿@page
+@model EndPoint.Razor.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "ثبت نام";
+   
+}
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label for="exampleInputFirstname">First Name</label>
+        <input asp-for="Model.FirstName" type="text" class="form-control" id="exampleInputFirstname" aria-describedby="emailHelp" placeholder="Enter Firstname" required>
+
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputLastname">Last Name</label>
+        <input asp-for="Model.LastName" type="text" class="form-control" id="exampleInputLastname" aria-describedby="emailHelp" placeholder="Enter Lastname" required>
+
+    </div>
+    <div class="form-group">
+        <label  for="exampleInputEmail">Email</label>
+        <input asp-for="Model.Email" type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email" required>
+
+    </div>
+    <div class="form-group">
+        <label  for="exampleInputPassword1">Password</label>
+        <input asp-for="Model.Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">ثبت نام</button>
+</form>
+<div id="message-box" class="mt-4 text-center text-sm">
+    <div style="color:red">@Model.Massege</div>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

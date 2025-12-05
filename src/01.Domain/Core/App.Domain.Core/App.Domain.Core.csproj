@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CategoryAgg\Enums\" />
+    <Folder Include="CommentAgg\AppServices\" />
+    <Folder Include="CommentAgg\DTOs\" />
+    <Folder Include="PostAgg\Enums\" />
+    <Folder Include="UserAgg\Enums\" />
+  </ItemGroup>
+
+</Project>
