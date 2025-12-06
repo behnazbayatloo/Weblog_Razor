@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Domain.Core.PostAgg.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace App.Domain.Core.PostAgg.Services
 {
     public interface IPostService
     {
+        bool CeatePost(PostInputDTO model);
+        bool DeletePost(int id);
+        bool EditPost(EditPostDTO model);
+        List<PostOutputDTO> GetRecentPost(int userid);
     }
 }

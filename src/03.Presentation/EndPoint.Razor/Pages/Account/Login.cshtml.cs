@@ -27,13 +27,12 @@ namespace EndPoint.Razor.Pages.Account
         public IActionResult OnPost()
         {
             var loginResult= userAppService.Login(Model.Email,Model.Password);
-          
+            
             if (loginResult.IsSuccess)
             {
                 cookieService.Set("Id", loginResult.Data.Id.ToString());
-                cookieService.Set("FirstName", loginResult.Data.FirstName);
-                cookieService.Set("LastName", loginResult.Data.LastName);
                 cookieService.Set("Email", loginResult.Data.Email);
+                cookieService.Set("FirstName", loginResult.Data.FirstName);
                 return RedirectToPage("/Account/CreatePost");
             }
             else
@@ -43,6 +42,9 @@ namespace EndPoint.Razor.Pages.Account
 
 
             return Page();
+        }
+        public IActionResult OnGetLogout() { HttpContext.Session.Clear();
+            return RedirectToPage("/Login");
         }
     }
 }

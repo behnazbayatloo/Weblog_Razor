@@ -11,9 +11,11 @@ namespace App.Domain.Services.CategoryAggSrv
 {
     public class CategoryService(ICategoryRepository categoryRepository) :ICategoryService
     {
-        public List<GetCategoryDTO> GetAll(int id)
+        public IEnumerable<GetCategoryDTO> GetAll(int id)
         {
            return  categoryRepository.GetAll(id);
         }
+        public bool CreteCategory(int userid,string categoryName)=>categoryRepository.CreateCategory(userid,categoryName);
+    public bool DeleteCategory(int id)=>categoryRepository.DleteCategory(id);
     }
 }

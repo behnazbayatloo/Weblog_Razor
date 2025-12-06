@@ -16,6 +16,9 @@ using App.Infra.Data.Repos.Ef.CategoryAgg;
 using App.Infra.Data.Repos.Ef.PostAgg;
 using App.Infra.Data.Repos.Ef.UserAgg;
 using EndPoint.Razor.Extentions;
+using Files.Contrcat;
+using Files.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +39,7 @@ builder.Services.AddScoped<ICategoryService , CategoryService>();
 builder.Services.AddScoped<IPostAppService, PostAppService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IFileService ,FileService>();
 
 var app = builder.Build();
 

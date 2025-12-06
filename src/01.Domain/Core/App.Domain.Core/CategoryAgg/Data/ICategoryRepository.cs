@@ -9,6 +9,8 @@ namespace App.Domain.Core.CategoryAgg.Data
 {
     public interface ICategoryRepository
     {
-        List<GetCategoryDTO> GetAll(int userid);
+        bool CreateCategory(int userid, string name);
+        bool DleteCategory(int id);
+        IEnumerable<GetCategoryDTO> GetAll(int userid);
     }
 }

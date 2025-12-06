@@ -1,0 +1,19 @@
+﻿@page
+@model EndPoint.Razor.Pages.Account.CategoryManagementModel
+@{
+    Layout = "_Layout-page";
+    ViewData["Title"] = $"ایجاد دسته بندی جدید{Request.Cookies["FirstName"]}";
+}
+<h2>ایجاد دسته‌بندی جدید</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Name">نام دسته‌بندی</label>
+        <input  asp-for ="Model.Name" type="text" class="form-control" id="Name" name="Name"  required />
+    </div>
+ 
+    <button type="submit" class="btn btn-primary">ایجاد</button>
+</form>
+<div id="message-box" class="mt-4 text-center text-sm">
+    <div style="color:red">@Model.Message</div>
+</div>

@@ -1,14 +1,19 @@
 ﻿@page
 @model EndPoint.Razor.Pages.Account.CreatePostModel
-@{
-}
+ 
 
 @{
-    ViewData["Title"] = $"ایجاد پست جدید{Request.Cookies["FirstName"]}";
+    Layout = "_Layout-page";
+    ViewData["Title"] = $" {Request.Cookies["FirstName"]} ایجاد پست جدید";
 }
 
 <h2 class="mb-4">ایجاد پست جدید</h2>
-
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">
+        @Model.SuccessMessage
+    </div>
+}
 <form method="post" class="bg-white p-4 rounded shadow-sm" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="Title" class="form-label">عنوان پست</label>
@@ -16,18 +21,18 @@
     </div>
 
     <div class="mb-3">
-        <label for="Category" class="form-label">دسته‌بندی</label>
-        <select asp-items="Model.Categories" class="form-select" id="Category" name="Category" required>
-           
+        <label for="Categry" class="form-label">دسته‌بندی</label>
+        <select asp-for="Model.CategoryId" asp-items="Model.Categories" class="form-control">
+            <option value="">-- انتخاب کنید --</option>
         </select>
     </div>
 
 
-    @* <div class="mb-3">
+    <div class="mb-3">
         <label for="Tags" class="form-label">تگ‌ها</label>
         <input type="text" class="form-control" id="Tags" name="Tags" placeholder="مثال: ASP.NET, C#" />
         <small class="text-muted">تگ‌ها را با کاما جدا کنید.</small>
-    </div> *@
+    </div>
 
     <div class="mb-3">
         <label for="Content" class="form-label">متن پست</label>
@@ -39,3 +44,6 @@
         <i class="bi bi-plus-circle"></i> انتشار پست
     </button>
 </form>
+<div id="message-box" class="mt-4 text-center text-sm">
+    <div style="color:red">@Model.Message</div>
+</div>

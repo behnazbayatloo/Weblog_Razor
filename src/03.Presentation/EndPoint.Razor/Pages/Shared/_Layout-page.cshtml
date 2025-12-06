@@ -63,7 +63,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/">وبلاگ من</a>
+            <a class="navbar-brand fw-bold" asp-for="/Account/Profile">وبلاگ من</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -73,13 +73,19 @@
                         <a class="nav-link" asp-page="/Account/Profile"> خانه </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-page="/Posts">همه نوشته‌ها</a>
+                        <a class="nav-link" asp-page="/Account/PostManagement">مدیریت پست ها</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-page="/Account/About">درباره من</a>
+                        <a class="nav-link" asp-page="/Account/CategoryManagement">مدیریت دسته بندی ها</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Contact">تماس</a>
+                        <a class="nav-link" asp-page="/Account/Feeds">نمایش پست ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Account/CreatePost"> ایجاد پست جدید </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Account/Login" asp-page-handler="Logout">خروج</a>
                     </li>
                 </ul>
 

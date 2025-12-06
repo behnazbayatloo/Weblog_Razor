@@ -1,4 +1,6 @@
-﻿using App.Domain.Core.PostAgg.AppServices;
+﻿using App.Domain.Core.CategoryAgg.AppServices;
+using App.Domain.Core.CategoryAgg.DTOs;
+using App.Domain.Core.PostAgg.AppServices;
 using App.Domain.Core.PostAgg.DTOs;
 using EndPoint.Razor.Extentions;
 using Microsoft.AspNetCore.Mvc;
@@ -18,51 +20,72 @@ namespace EndPoint.Razor.Pages.Account
         public string? ImageUrl { get; set; }
         public int CategoryId { get; set; }
     }
-    //public class CategoryViewModel
-    //{
-    //    public string Title { get; set; }
-    //    public int Id { get; set; }
-    //}
-    public class CreatePostModel (IPostAppService postAppService): BasePageModel
+   
+    public class CreatePostModel (IPostAppService postAppService, ICategoryAppService category,ICookieService cookie): BasePageModel
     {
         [BindProperty]
         public CreatePostViewModel Model { get; set; }
-       
-        public List<SelectListItem> Categories { get; set; }
         
-        public IActionResult OnGetCreate()
+        public List<SelectListItem> Categories { get; set; }
+         
+        public string Message { get; set; }
+        [TempData]
+        public string SuccessMessage { get; set; }
+        public IActionResult OnGet()
         {
-            var userId = Request.Cookies["Id"];
-            var firstName = Request.Cookies["FirstName"];
 
-            if (string.IsNullOrEmpty(userId))
+            var userId = cookie.GetUserId();
+            
+
+            if (userId == null)
             {
                 // کاربر لاگین نیست
-                return RedirectToPage("/Account/Login");
+                return RedirectToPage("/Login");
             }
-            //Categories =;
+            
+            Categories = category.GetAll(userId).Select(c=> new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+
+            }).ToList();
+
             return Page();
         }
-        public IActionResult OnPostCreate()
+        public IActionResult OnPost()
         {
-            var userId = Request.Cookies["Id"];
-            var firstName = Request.Cookies["FirstName"];
 
-            if (string.IsNullOrEmpty(userId))
-            {
-                // کاربر لاگین نیست
-                return RedirectToPage("/Account/Login");
-            }
+            var userId = cookie.GetUserId();
             var newPost = new PostInputDTO
             {
-                //CategoryId=Model.
-
+                UserId = userId,
+                CategoryId=Model.CategoryId,
+                Description = Model.Description,
+                ImageUrl = Model.ImageUrl,
+                Title = Model.Title
+                
             };
+            var result= postAppService.CrestePost(newPost);
+            if (result.IsSuccess)
+            {
+                TempData["SuccessMessage"] = result.Message;
+                return RedirectToPage("/PostManagement");
+            }
+            else
+            {
+                
+                Categories = category.GetAll(userId).Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
 
+                }).ToList();
+                Message = result.Message;
+                return Page();
 
-
-
-            return RedirectToPage("Account/Posts");
+            }
+            
+            
         }
     }
 }
