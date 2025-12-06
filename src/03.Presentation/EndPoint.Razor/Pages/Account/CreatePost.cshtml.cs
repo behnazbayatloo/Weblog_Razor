@@ -34,16 +34,16 @@ namespace EndPoint.Razor.Pages.Account
         public IActionResult OnGet()
         {
 
-            var userId = cookie.GetUserId();
+           
             
 
-            if (userId == null)
+            if (GetUserId() == 0)
             {
                 // کاربر لاگین نیست
                 return RedirectToPage("/Login");
             }
             
-            Categories = category.GetAll(userId).Select(c=> new SelectListItem
+            Categories = category.GetAll(GetUserId()).Select(c=> new SelectListItem
             {
                 Value = c.Id.ToString(),
                 Text = c.Name
@@ -55,10 +55,10 @@ namespace EndPoint.Razor.Pages.Account
         public IActionResult OnPost()
         {
 
-            var userId = cookie.GetUserId();
+            
             var newPost = new PostInputDTO
             {
-                UserId = userId,
+                UserId = GetUserId(),
                 CategoryId=Model.CategoryId,
                 Description = Model.Description,
                 ImageUrl = Model.ImageUrl,
@@ -74,7 +74,7 @@ namespace EndPoint.Razor.Pages.Account
             else
             {
                 
-                Categories = category.GetAll(userId).Select(c => new SelectListItem
+                Categories = category.GetAll(GetUserId()).Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = c.Name

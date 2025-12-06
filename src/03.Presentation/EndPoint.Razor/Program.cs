@@ -1,5 +1,7 @@
+using App.Domain.AppServices.CategoryAggApp;
 using App.Domain.AppServices.PostAggApp;
 using App.Domain.AppServices.UserAggApp;
+using App.Domain.Core.CategoryAgg.AppServices;
 using App.Domain.Core.CategoryAgg.Data;
 using App.Domain.Core.CategoryAgg.Services;
 using App.Domain.Core.PostAgg.AppServices;
@@ -35,7 +37,7 @@ builder.Services.AddScoped<IUserService , UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICategoryRepository , CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICategoryService , CategoryService>();
+builder.Services.AddScoped<ICategoryAppService , CategoryAppService>();
 builder.Services.AddScoped<IPostAppService, PostAppService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
