@@ -17,7 +17,7 @@ namespace EndPoint.Razor.Pages.Account
         [Required(ErrorMessage = "پر کردن این فیلد الزامیست")]
         public string Description { get; set; }
         [Required(ErrorMessage = "پر کردن این فیلد الزامیست")]
-        public string? ImageUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
         public int CategoryId { get; set; }
     }
    
@@ -40,7 +40,7 @@ namespace EndPoint.Razor.Pages.Account
             if (GetUserId() == 0)
             {
                 // کاربر لاگین نیست
-                return RedirectToPage("/Login");
+                return RedirectToPage("/Account/Login");
             }
             
             Categories = category.GetAll(GetUserId()).Select(c=> new SelectListItem
@@ -55,13 +55,13 @@ namespace EndPoint.Razor.Pages.Account
         public IActionResult OnPost()
         {
 
-            
+           
             var newPost = new PostInputDTO
             {
                 UserId = GetUserId(),
                 CategoryId=Model.CategoryId,
                 Description = Model.Description,
-                ImageUrl = Model.ImageUrl,
+                Img = Model.ImageUrl,
                 Title = Model.Title
                 
             };
@@ -69,7 +69,7 @@ namespace EndPoint.Razor.Pages.Account
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = result.Message;
-                return RedirectToPage("/PostManagement");
+                return RedirectToPage("/Account/PostMangement");
             }
             else
             {

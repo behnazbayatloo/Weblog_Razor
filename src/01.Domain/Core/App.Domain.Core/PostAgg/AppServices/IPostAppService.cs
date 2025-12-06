@@ -13,6 +13,8 @@ namespace App.Domain.Core.PostAgg.AppServices
         Result<bool> CrestePost(PostInputDTO postDTO);
         bool DeletePost(int id);
         bool EditPost(EditPostDTO postDTO);
+        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
+        PostOutputDTO? GetPostById(int userid, int id);
         List<PostOutputDTO> GetRecentPost(int userid);
     }
 }

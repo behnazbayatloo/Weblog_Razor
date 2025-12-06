@@ -12,6 +12,8 @@ namespace App.Domain.Core.PostAgg.Services
         bool CeatePost(PostInputDTO model);
         bool DeletePost(int id);
         bool EditPost(EditPostDTO model);
+        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
+        PostOutputDTO? GetPostById(int userid, int id);
         List<PostOutputDTO> GetRecentPost(int userid);
     }
 }

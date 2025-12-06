@@ -15,6 +15,8 @@ namespace App.Domain.Core.PostAgg.Data
         bool EditDescriptionPost(EditPostDTO model);
         bool EditImgPost(EditPostDTO model);
         bool EditTitlePost(EditPostDTO model);
+        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
+        PostOutputDTO? GetPostById(int userid, int id);
         string? GetPostUrl(int postId);
         List<PostOutputDTO>? GetRecentPosts(int userId);
     }

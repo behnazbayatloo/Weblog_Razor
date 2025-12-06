@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EndPoint.Razor.Pages.Account
 {
-    public class PostViewModel
+    public class PostMangementViewModel
     {
         public int Id { get; set; }
         public string CreateAt { get; set; }
@@ -18,7 +18,7 @@ namespace EndPoint.Razor.Pages.Account
     public class PostMangementModel(IPostAppService postappsrv ,ICookieService cookie) : BasePageModel
     {
         [BindProperty]
-        public List<PostViewModel> Posts { get; set; }
+        public List<PostMangementViewModel> Posts { get; set; }
         public string Message { get; set; }
         [TempData]
         public string SuccessMessage { get; set; }
@@ -26,7 +26,7 @@ namespace EndPoint.Razor.Pages.Account
         public void OnGet()
         {
             var id = cookie.GetUserId();
-            Posts = postappsrv.GetRecentPost(id).Select (p=> new PostViewModel
+            Posts = postappsrv.GetRecentPost(id).Select (p=> new PostMangementViewModel
             {
                 Id=p.Id,
                 Title=p.Title,

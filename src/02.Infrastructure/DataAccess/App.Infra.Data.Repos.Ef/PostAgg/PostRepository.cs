@@ -2,6 +2,7 @@
 using App.Domain.Core.PostAgg.Data;
 using App.Domain.Core.PostAgg.DTOs;
 using App.Domain.Core.PostAgg.Entities;
+using App.Domain.Core.UserAgg.Entities;
 using App.Infra.Data.Db.SqlServer.Ef.DbCxt;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,7 +54,7 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
         public bool EditImgPost (EditPostDTO model)
         {
             _dbcontext.Posts.Where(P => P.Id == model.Id)
-               .ExecuteUpdate(set => set.SetProperty(p => p.ImageUrl, model.Imag));
+               .ExecuteUpdate(set => set.SetProperty(p => p.ImageUrl, model.ImgUrl));
             return true;
         }
         public string? GetPostUrl(int postId)
@@ -79,9 +80,42 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
                     Description=p.Description,
                     CreatedAt=p.CreatedAt,
                     Category=p.Category.Name,
-                    Img=p.ImageUrl
-
+                    Img=p.ImageUrl,
+                    CategoryId=p.CategoryId
                 }).ToList();
+
+        }
+        public PostOutputDTO? GetPostById (int userid,int id)
+        {
+            return _dbcontext.Posts.Where(p => p.UserId == userid && p.Id==id)
+               
+               .Select(p => new PostOutputDTO
+               {
+                   Id = p.Id,
+                   Title = p.Title,
+                   Description = p.Description,
+                   CreatedAt = p.CreatedAt,
+                   Category = p.Category.Name,
+                   Img = p.ImageUrl,
+                   CategoryId = p.CategoryId
+               }).FirstOrDefault();
+        }
+        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()
+
+        {
+            return _dbcontext.Posts
+                  .OrderByDescending(p => p.CreatedAt)
+                  .Select(p => new ShowPostDTO
+                  {
+                      Id = p.Id,
+                      Title = p.Title,
+                      Description = p.Description,
+                      CreatedAt = p.CreatedAt,
+                      Category = p.Category.Name,
+                      Img = p.ImageUrl,
+                      Author = p.User.FirstName
+
+                  }).ToList();
 
         }
 

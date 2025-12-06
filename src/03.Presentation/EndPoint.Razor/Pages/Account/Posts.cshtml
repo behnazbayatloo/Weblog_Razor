@@ -1,0 +1,55 @@
+﻿@page
+@model EndPoint.Razor.Pages.Account.PostsModel
+
+@{
+    Layout = "_Layout-page";
+    ViewData["Title"] = "نمایش پست‌ها";
+}
+
+<div class="container">
+    <h2 class="mb-4">📚 لیست پست‌ها</h2>
+
+    <!-- حلقه نمایش پست‌ها -->
+    @foreach (var post in Model.Posts)
+    {
+        <div class="card post-card mb-4">
+            <div class="row g-0">
+                <!-- تصویر پست -->
+                <div class="col-md-4">
+                    <img src="@(string.IsNullOrEmpty(post.Img) ? "/images/default.png" : post.Img)" 
+                         class="img-fluid rounded-start" alt="تصویر پست" />
+                </div>
+
+                <!-- محتوای پست -->
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@post.Title</h5>
+                        <p class="card-text text-muted">@post.Description</p>
+
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="bi bi-calendar-event"></i> تاریخ انتشار: @post.CreatedAt
+                            </small>
+                        </p>
+
+                        <p class="card-text">
+                            <span class="badge bg-primary">
+                                <i class="bi bi-tags"></i> دسته‌بندی: @post.Category
+                            </span>
+                        </p>
+
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="bi bi-person-circle"></i> نویسنده: @post.Author
+                            </small>
+                        </p>
+
+                      @*   <a asp-page="/Account/PostDetails" asp-route-id="@post.Id" class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="bi bi-eye"></i> مشاهده جزئیات
+                        </a> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

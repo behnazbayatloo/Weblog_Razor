@@ -44,7 +44,7 @@
                 <td>@post.Category</td>
                 <td>@post.Description</td>
                 <td>
-                    <a asp-page-handler="Edit" asp-route-id="@post.Id" class="btn btn-warning">ویرایش</a>
+                    <a asp-page="/Account/Edit" asp-route-id="@post.Id" class="btn btn-warning">ویرایش</a>
                     <form asp-page-handler="Delete" asp-route-id="@post.Id" method="post" style="display:inline" onsubmit="return confirm('آیا از حذف این پست مطمئن هستید؟');">
                         <button type="submit" class="btn btn-danger">حذف</button>
                     </form>

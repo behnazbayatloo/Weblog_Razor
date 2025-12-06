@@ -32,12 +32,16 @@ namespace App.Domain.Services.PostAggSrv
             }
             if (model.Imag != null)
             {
-                fileservice.Delete(model.Imag);
+                var img = postrepo.GetPostUrl(model.Id);
+                fileservice.Delete(img);
+                model.ImgUrl = fileservice.Upload(model.Imag,"Post");
+               
                 postrepo.EditImgPost(model);
             }
             return true;
         }
         public List<PostOutputDTO> GetRecentPost(int userid) => postrepo.GetRecentPosts(userid);
-        
+        public PostOutputDTO? GetPostById(int userid, int id) => postrepo.GetPostById(userid, id);
+        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()=> postrepo.GetAllRecentPosts();
     }
 }

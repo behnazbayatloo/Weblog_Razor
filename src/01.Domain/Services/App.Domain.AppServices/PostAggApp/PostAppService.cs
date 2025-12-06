@@ -33,5 +33,7 @@ namespace App.Domain.AppServices.PostAggApp
         }
         public bool EditPost(EditPostDTO postDTO) => postService.EditPost(postDTO);
         public bool DeletePost(int id) => postService.DeletePost(id);
+        public PostOutputDTO? GetPostById(int userid, int id) => postService.GetPostById(userid, id);
+        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()=>postService.GetAllRecentPosts();
     }
 }

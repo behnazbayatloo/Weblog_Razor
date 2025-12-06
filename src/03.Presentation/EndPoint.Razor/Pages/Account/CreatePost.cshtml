@@ -16,30 +16,23 @@
 }
 <form method="post" class="bg-white p-4 rounded shadow-sm" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="Title" class="form-label">عنوان پست</label>
-        <input asp-for="Model.Title" type="text" class="form-control" id="Title" name="Title" required />
+        <label asp-for="Model.Title" class="form-label">عنوان پست</label>
+        <input asp-for="Model.Title" type="text" class="form-control"  required />
     </div>
 
     <div class="mb-3">
-        <label for="Categry" class="form-label">دسته‌بندی</label>
+        <label asp-for="Model.CategoryId" class="form-label">دسته‌بندی</label>
         <select asp-for="Model.CategoryId" asp-items="Model.Categories" class="form-control">
             <option value="">-- انتخاب کنید --</option>
         </select>
     </div>
 
-
     <div class="mb-3">
-        <label for="Tags" class="form-label">تگ‌ها</label>
-        <input type="text" class="form-control" id="Tags" name="Tags" placeholder="مثال: ASP.NET, C#" />
-        <small class="text-muted">تگ‌ها را با کاما جدا کنید.</small>
+        <label asp-for="Model.Description" class="form-label">متن پست</label>
+        <textarea asp-for="Model.Description" class="form-control" rows="8" required></textarea>
     </div>
-
-    <div class="mb-3">
-        <label for="Content" class="form-label">متن پست</label>
-        <textarea asp-for="Model.Description" class="form-control" id="Content" name="Content" rows="8" required></textarea>
-    </div>
-    <label for="image">انتخاب عکس:</label>
-    <input asp-for="Model.ImageUrl" type="file" id="image" name="image" accept="image/*" />
+    <label asp-for="Model.ImageUrl">انتخاب عکس:</label>
+    <input asp-for="Model.ImageUrl" type="file"  accept="image/*" />
     <button type="submit" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> انتشار پست
     </button>

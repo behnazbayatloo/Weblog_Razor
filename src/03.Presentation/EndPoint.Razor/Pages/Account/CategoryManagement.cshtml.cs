@@ -26,7 +26,7 @@ namespace EndPoint.Razor.Pages.Account
             if(result.IsSuccess)
             {
                 TempData["SuccessMessage"] = result.Message;
-                return RedirectToPage("/CreatePost");
+                return RedirectToPage("/Account/CreatePost");
             }
             else
             {

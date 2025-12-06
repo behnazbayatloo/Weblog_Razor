@@ -26,7 +26,7 @@ namespace App.Infra.Data.Repos.Ef.CategoryAgg
         }
         public bool CreateCategory(int userid,string name)
         {
-            var cat = new Category { Name = name };
+            var cat = new Category { UserId= userid,Name = name };
             _dbcontext.Categories.Add(cat);
            return _dbcontext.SaveChanges() == 1;
         }
