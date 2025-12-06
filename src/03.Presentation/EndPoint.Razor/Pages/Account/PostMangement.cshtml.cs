@@ -49,7 +49,7 @@ namespace EndPoint.Razor.Pages.Account
             {
                 Message = "پست حذف نشد";
             }
-                return Page();
+                return RedirectToPage("/Account/PostMangement");
         }
         
     }
