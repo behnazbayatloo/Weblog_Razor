@@ -4,7 +4,7 @@
     Layout = "_Layout-page";
     ViewData["Title"] = $" {Request.Cookies["FirstName"]} ویرایش پست ";
 }
-<form method="post" class="bg-white p-4 rounded shadow-sm" enctype="multipart/form-data">
+<form method="post"@*  asp-route-postid="Post.Id" *@ class="bg-white p-4 rounded shadow-sm" enctype="multipart/form-data">
     <div class="mb-3">
         <input type="hidden"  asp-for="Post.Id" />
         <label asp-for="Post.Title" class="form-label">عنوان پست</label>

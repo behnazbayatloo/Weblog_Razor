@@ -2,6 +2,7 @@ using App.Domain.Core.CategoryAgg.AppServices;
 using App.Domain.Core.CategoryAgg.Entities;
 using App.Domain.Core.PostAgg.AppServices;
 using App.Domain.Core.PostAgg.DTOs;
+using App.Domain.Core.PostAgg.Entities;
 using EndPoint.Razor.Extentions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -36,7 +37,8 @@ namespace EndPoint.Razor.Pages.Account
 
             }).ToList();
             var model = postApp.GetPostById(GetUserId(), id);
-            Post = new EditPostViewModel { 
+            Post = new EditPostViewModel {
+                Id=model.Id,
             CategoryId=model.CategoryId,
             Description=model.Description,
             Title=model.Title,

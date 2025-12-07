@@ -43,8 +43,13 @@ namespace EndPoint.Razor.Pages.Account
 
             return Page();
         }
-        public IActionResult OnGetLogout() { HttpContext.Session.Clear();
-            return RedirectToPage("/Login");
+        public IActionResult OnGetLogout() 
+        {
+            Response.Cookies.Delete("Id");
+            Response.Cookies.Delete("Email");
+            Response.Cookies.Delete("FirstName");
+
+            return RedirectToPage("/Account/Login");
         }
     }
 }
