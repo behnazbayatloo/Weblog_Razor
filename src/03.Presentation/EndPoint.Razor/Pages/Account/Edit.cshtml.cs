@@ -28,15 +28,16 @@ namespace EndPoint.Razor.Pages.Account
         [BindProperty]
         public EditPostViewModel Post { get; set; }
         public List<SelectListItem> Categories { get; set; }
-        public void OnGet(int id)
+        public async Task  OnGet(int id,CancellationToken ct)
         {
-            Categories = category.GetAll(GetUserId()).Select(c => new SelectListItem
+            var cat = await category.GetAll(GetUserId(),ct);
+            Categories = cat.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
                 Text = c.Name
 
             }).ToList();
-            var model = postApp.GetPostById(GetUserId(), id);
+            var model = await postApp.GetPostById(GetUserId(), id,ct);
             Post = new EditPostViewModel {
                 Id=model.Id,
             CategoryId=model.CategoryId,
@@ -47,7 +48,7 @@ namespace EndPoint.Razor.Pages.Account
             };
 
         }
-        public IActionResult OnPost ()
+        public async Task<IActionResult> OnPost (CancellationToken ct)
         {
             var newPost = new EditPostDTO
             {
@@ -58,7 +59,7 @@ namespace EndPoint.Razor.Pages.Account
                 Imag=Post.ImgFile
 
             };
-            var result = postApp.EditPost(newPost);
+            var result =await postApp.EditPost(newPost,ct);
             if(result)
             {
                 return RedirectToPage("/Account/PostMangement");

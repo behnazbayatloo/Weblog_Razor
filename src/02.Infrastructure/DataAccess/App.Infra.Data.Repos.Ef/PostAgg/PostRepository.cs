@@ -15,7 +15,7 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
 {
     public class PostRepository( AppDbContext _dbcontext) :IPostRepository
     {
-        public bool CreatePost(PostInputDTO model )
+        public async Task<bool> CreatePostAsync(PostInputDTO model, CancellationToken ct)
         {
             var post = new Post
             {
@@ -27,51 +27,51 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
 
             };
             _dbcontext.Posts.Add(post);
-          return  _dbcontext.SaveChanges()==1;
+          return await  _dbcontext.SaveChangesAsync(ct)==1;
             
         }
 
-        public bool EditTitlePost(EditPostDTO model)
+        public async Task<bool> EditTitlePost(EditPostDTO model, CancellationToken ct)
         {
-            _dbcontext.Posts.Where(P => P.Id == model.Id)
-                .ExecuteUpdate(set => set.SetProperty(p=>p.Title,model.Title));
+           await _dbcontext.Posts.Where(P => P.Id == model.Id)
+                .ExecuteUpdateAsync(set => set.SetProperty(p=>p.Title,model.Title),ct);
             return true;
         }
-        public bool EditDescriptionPost(EditPostDTO model)
+        public async Task<bool> EditDescriptionPostAsync(EditPostDTO model, CancellationToken ct)
         {
-            _dbcontext.Posts.Where(P => P.Id == model.Id)
-                .ExecuteUpdate(set => set.SetProperty(p => p.Description, model.Description));
-            return true;
-
-        }
-        public bool EditCategoryPost (EditPostDTO model)
-        {
-            _dbcontext.Posts.Where(P => P.Id == model.Id)
-                .ExecuteUpdate(set => set.SetProperty(p => p.CategoryId, model.CategoryId));
+           await _dbcontext.Posts.Where(P => P.Id == model.Id)
+                .ExecuteUpdateAsync(set => set.SetProperty(p => p.Description, model.Description), ct);
             return true;
 
         }
-        public bool EditImgPost (EditPostDTO model)
+        public async Task<bool> EditCategoryPostAsync (EditPostDTO model, CancellationToken ct)
         {
-            _dbcontext.Posts.Where(P => P.Id == model.Id)
-               .ExecuteUpdate(set => set.SetProperty(p => p.ImageUrl, model.ImgUrl));
+          await  _dbcontext.Posts.Where(P => P.Id == model.Id)
+                .ExecuteUpdateAsync(set => set.SetProperty(p => p.CategoryId, model.CategoryId),ct);
+            return true;
+
+        }
+        public async Task<bool> EditImgPostAsync (EditPostDTO model, CancellationToken ct)
+        {
+           await _dbcontext.Posts.Where(P => P.Id == model.Id)
+               .ExecuteUpdateAsync(set => set.SetProperty(p => p.ImageUrl, model.ImgUrl),ct);
             return true;
         }
-        public string? GetPostUrl(int postId)
+        public async Task<string?> GetPostUrlAsync(int postId, CancellationToken ct)
         {
-            return _dbcontext.Posts.Where(P => P.Id == postId)
-               .Select (p=>p.ImageUrl).FirstOrDefault();
+            return await _dbcontext.Posts.Where(P => P.Id == postId)
+               .Select (p=>p.ImageUrl).FirstOrDefaultAsync(ct);
           
         }
-        public bool DeletePost(int postId) 
+        public async Task<bool> DeletePostAsync(int postId, CancellationToken ct) 
         {
-            _dbcontext.Posts.Where(p => p.Id == postId).ExecuteUpdate(set => set.SetProperty(p => p.IsDeleted , true));
+           await _dbcontext.Posts.Where(p => p.Id == postId).ExecuteUpdateAsync(set => set.SetProperty(p => p.IsDeleted , true),ct);
             return true;
         }
-        public List<PostOutputDTO>? GetRecentPosts(int userId)
+        public async Task<List<PostOutputDTO>?> GetRecentPostsAsync(int userId, CancellationToken ct)
 
         {
-          return  _dbcontext.Posts.Where(p => p.UserId == userId)
+          return await _dbcontext.Posts.Where(p => p.UserId == userId)
                 .OrderByDescending(p => p.CreatedAt)
                 .Select(p => new PostOutputDTO
                 {
@@ -82,12 +82,12 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
                     Category=p.Category.Name,
                     Img=p.ImageUrl,
                     CategoryId=p.CategoryId
-                }).ToList();
+                }).ToListAsync(ct);
 
         }
-        public PostOutputDTO? GetPostById (int userid,int id)
+        public async Task<PostOutputDTO?> GetPostByIdAsync (int userid,int id, CancellationToken ct)
         {
-            return _dbcontext.Posts.Where(p => p.UserId == userid && p.Id==id)
+            return await _dbcontext.Posts.Where(p => p.UserId == userid && p.Id==id)
                
                .Select(p => new PostOutputDTO
                {
@@ -98,12 +98,12 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
                    Category = p.Category.Name,
                    Img = p.ImageUrl,
                    CategoryId = p.CategoryId
-               }).FirstOrDefault();
+               }).FirstOrDefaultAsync(ct);
         }
-        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()
+        public async Task<IEnumerable<ShowPostDTO>>? GetAllRecentPostsAsync(CancellationToken ct)
 
         {
-            return _dbcontext.Posts
+            return await _dbcontext.Posts
                   .OrderByDescending(p => p.CreatedAt)
                   .Select(p => new ShowPostDTO
                   {
@@ -115,9 +115,10 @@ namespace App.Infra.Data.Repos.Ef.PostAgg
                       Img = p.ImageUrl,
                       Author = p.User.FirstName
 
-                  }).ToList();
+                  }).ToListAsync(ct);
 
         }
 
+       
     }
 }

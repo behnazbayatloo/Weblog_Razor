@@ -9,15 +9,15 @@ namespace App.Domain.Core.PostAgg.Data
 {
     public interface IPostRepository
     {
-        bool CreatePost(PostInputDTO model);
-        bool DeletePost(int postId);
-        bool EditCategoryPost(EditPostDTO model);
-        bool EditDescriptionPost(EditPostDTO model);
-        bool EditImgPost(EditPostDTO model);
-        bool EditTitlePost(EditPostDTO model);
-        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
-        PostOutputDTO? GetPostById(int userid, int id);
-        string? GetPostUrl(int postId);
-        List<PostOutputDTO>? GetRecentPosts(int userId);
+        Task<bool> CreatePostAsync(PostInputDTO model, CancellationToken ct);
+       Task< bool> DeletePostAsync(int postId, CancellationToken ct);
+        Task<bool> EditCategoryPostAsync(EditPostDTO model, CancellationToken ct);
+        Task<bool> EditDescriptionPostAsync(EditPostDTO model, CancellationToken ct);
+       Task< bool> EditImgPostAsync(EditPostDTO model, CancellationToken ct);
+        Task<bool> EditTitlePost(EditPostDTO model, CancellationToken ct);
+        Task<IEnumerable<ShowPostDTO>>? GetAllRecentPostsAsync(CancellationToken ct);
+        Task<PostOutputDTO>? GetPostByIdAsync(int userid, int id, CancellationToken ct);
+        Task<string>? GetPostUrlAsync(int postId, CancellationToken ct);
+        Task<List<PostOutputDTO>>? GetRecentPostsAsync(int userId, CancellationToken ct);
     }
 }

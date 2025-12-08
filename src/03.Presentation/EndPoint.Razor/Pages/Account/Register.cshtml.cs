@@ -33,7 +33,7 @@ namespace EndPoint.Razor.Pages.Account
         {
 
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken ct)
         {
             if (ModelState.IsValid == false)
             {
@@ -46,7 +46,7 @@ FirstName = Model.FirstName,
 LastName = Model.LastName,
 HashPassword=Model.Password
             };
-            var registerResult = userAppService.Register(usermodel);
+            var registerResult = await userAppService.Register(usermodel,ct);
             if (registerResult.IsSuccess)
             {
                 Massege = registerResult.Message;

@@ -11,11 +11,11 @@ namespace App.Domain.Services.CategoryAggSrv
 {
     public class CategoryService(ICategoryRepository categoryRepository) :ICategoryService
     {
-        public IEnumerable<GetCategoryDTO> GetAll(int id)
+        public async Task<IEnumerable<GetCategoryDTO>> GetAll(int id, CancellationToken ct)
         {
-           return  categoryRepository.GetAll(id);
+           return await categoryRepository.GetAllAsync(id,ct);
         }
-        public bool CreteCategory(int userid,string categoryName)=>categoryRepository.CreateCategory(userid,categoryName);
-    public bool DeleteCategory(int id)=>categoryRepository.DleteCategory(id);
+        public async Task<bool> CreteCategory(int userid,string categoryName, CancellationToken ct) =>await categoryRepository.CreateCategoryAsync(userid, categoryName,ct);
+    public async Task<bool> DeleteCategory(int id, CancellationToken ct) =>await categoryRepository.DleteCategoryAsync(id,ct);
     }
 }

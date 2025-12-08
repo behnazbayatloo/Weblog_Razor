@@ -9,8 +9,8 @@ namespace App.Domain.Core.UserAgg.Data
 {
     public interface IUserRepository
     {
-        bool ExistEmail(string email);
-        LoginOutputUserDTO? Login(string email, string password);
-        bool Register(RegisterUserInputDTO model);
+       Task< bool> ExistEmailAsync(string email, CancellationToken ct);
+        Task<LoginOutputUserDTO>? LoginAsync(string email, string password, CancellationToken ct);
+        Task<bool> RegisterAsync(RegisterUserInputDTO model, CancellationToken ct);
     }
 }

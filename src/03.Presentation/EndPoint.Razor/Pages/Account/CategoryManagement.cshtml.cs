@@ -19,10 +19,10 @@ namespace EndPoint.Razor.Pages.Account
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync( CancellationToken ct)
         {
-            var userid = cookie.GetUserId();
-           var result= category.CreateCategory(userid, Model.Name);
+           
+           var result= await category.CreateCategory(GetUserId(), Model.Name,ct);
             if(result.IsSuccess)
             {
                 TempData["SuccessMessage"] = result.Message;

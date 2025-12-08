@@ -12,9 +12,9 @@ namespace App.Domain.Core.UserAgg.Services
     {
         bool EnsureEmail(string email);
         bool EnsurePassword(string password);
-        bool ExistEmail(string email);
+        Task<bool> ExistEmail(string email, CancellationToken ct);
         string HashPassword(string password);
-        LoginOutputUserDTO Login(string email, string password);
-        bool Register(RegisterUserInputDTO model);
+        Task<LoginOutputUserDTO> Login(string email, string password, CancellationToken ct);
+        Task<bool> Register(RegisterUserInputDTO model, CancellationToken ct);
     }
 }

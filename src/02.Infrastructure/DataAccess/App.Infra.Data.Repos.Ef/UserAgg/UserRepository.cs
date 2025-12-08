@@ -16,7 +16,7 @@ namespace App.Infra.Data.Repos.Ef.UserAgg
     {
       
 
-        public bool Register(RegisterUserInputDTO model)
+        public async Task<bool> RegisterAsync(RegisterUserInputDTO model, CancellationToken ct)
         {
             var entity = new User
             {
@@ -28,24 +28,24 @@ namespace App.Infra.Data.Repos.Ef.UserAgg
             };
 
             _dbcontext.Users.Add(entity);
-            return _dbcontext.SaveChanges() == 1;
+            return await _dbcontext.SaveChangesAsync(ct) == 1;
         }
 
-        public bool ExistEmail(string email)
+        public async Task<bool> ExistEmailAsync(string email, CancellationToken ct)
         {
-            return _dbcontext.Users.Any(u => u.Email == email); 
+            return await _dbcontext.Users.AnyAsync(u => u.Email == email,ct); 
         }
 
-        public LoginOutputUserDTO? Login(string email, string password)
+        public async Task<LoginOutputUserDTO?> LoginAsync(string email, string password, CancellationToken ct)
         {
-            return _dbcontext.Users.Where(u => u.Email == email && u.HashPassword == password)
+            return await _dbcontext.Users.Where(u => u.Email == email && u.HashPassword == password)
                 .Select(u => new LoginOutputUserDTO
                 {
                     Email = email,
                     Id = u.Id,
                     LastName = u.LastName,
                     FirstName = u.FirstName
-                }).FirstOrDefault();
+                }).FirstOrDefaultAsync(ct);
 
         }
     }

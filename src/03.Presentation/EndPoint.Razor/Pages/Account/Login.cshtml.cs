@@ -3,6 +3,7 @@ using EndPoint.Razor.Extentions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace EndPoint.Razor.Pages.Account
 {
@@ -24,9 +25,9 @@ namespace EndPoint.Razor.Pages.Account
 
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken ct)
         {
-            var loginResult= userAppService.Login(Model.Email,Model.Password);
+            var loginResult=await userAppService.Login(Model.Email,Model.Password,ct);
             
             if (loginResult.IsSuccess)
             {

@@ -28,9 +28,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<AppDbContext>(options => {
-    options.UseSqlServer(@"Server=DESKTOP-LO9POA3\SQLEXPRESS;Database=Weblog;Integrated Security = true;Encrypt=True;TrustServerCertificate=True;");
-});
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")) );
+
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<IUserService , UserService>();

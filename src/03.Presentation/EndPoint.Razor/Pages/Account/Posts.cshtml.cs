@@ -18,9 +18,11 @@ namespace EndPoint.Razor.Pages.Account
     public class PostsModel(IPostAppService postapp) : BasePageModel
     {
         public List<PostViewModel> Posts { get; set; }
-        public void OnGet()
-        {
-            Posts = postapp.GetAllRecentPosts().Select(p => new PostViewModel
+        public async Task OnGet(CancellationToken ct)
+        { 
+                var ps = await postapp.GetAllRecentPostsasync(ct);
+
+            Posts =ps.Select(p => new PostViewModel
             {
                 Id = p.Id,
                 Title = p.Title,

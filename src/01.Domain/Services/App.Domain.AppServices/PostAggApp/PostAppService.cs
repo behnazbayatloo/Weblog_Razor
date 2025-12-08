@@ -13,13 +13,13 @@ namespace App.Domain.AppServices.PostAggApp
 {
     public class PostAppService (IFileService file,IPostService postService):IPostAppService
     {
-        public Result<bool> CrestePost(PostInputDTO postDTO)
+        public async Task<Result<bool>> CrestePost(PostInputDTO postDTO, CancellationToken ct)
         {
             if(postDTO.Img is not null)
 
-            { postDTO.ImageUrl = file.Upload(postDTO.Img, "Post"); }
+            { postDTO.ImageUrl =await file.Upload(postDTO.Img, "Post",ct); }
            
-           var result= postService.CeatePost(postDTO);
+           var result= await postService.CeatePost(postDTO, ct);
             if (result)
             {
                 return Result<bool>.Success("پست با موفقیت ذخیره شد");
@@ -27,13 +27,17 @@ namespace App.Domain.AppServices.PostAggApp
             else
                 return Result<bool>.Failure("پست ذخیره نشد");
         }
-        public List<PostOutputDTO> GetRecentPost(int userid)
+        public async Task<List<PostOutputDTO>> GetRecentPost(int userid, CancellationToken ct)
         {
-             return postService.GetRecentPost(userid);
+             return await postService.GetRecentPost(userid,ct);
         }
-        public bool EditPost(EditPostDTO postDTO) => postService.EditPost(postDTO);
-        public bool DeletePost(int id) => postService.DeletePost(id);
-        public PostOutputDTO? GetPostById(int userid, int id) => postService.GetPostById(userid, id);
-        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()=>postService.GetAllRecentPosts();
+        public async Task<bool> EditPost(EditPostDTO postDTO, CancellationToken ct) =>await postService.EditPost(postDTO,ct);
+        public async Task<bool> DeletePost(int id, CancellationToken ct) =>await postService.DeletePost(id,ct);
+        public async Task<PostOutputDTO?> GetPostById(int userid, int id, CancellationToken ct) =>await postService.GetPostById(userid, id,ct);
+        public async Task<IEnumerable<ShowPostDTO>?> GetAllRecentPostsasync(CancellationToken ct) =>await postService.GetAllRecentPosts(ct);
+
+        
+
+        
     }
 }

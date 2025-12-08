@@ -13,35 +13,37 @@ namespace App.Domain.Services.PostAggSrv
 {
     public class PostService(IPostRepository postrepo,IFileService fileservice):IPostService
     {
-        public bool CeatePost (PostInputDTO model)=>postrepo.CreatePost (model);
-        public bool DeletePost (int id)=>postrepo.DeletePost (id);
+        public async Task<bool> CeatePost (PostInputDTO model, CancellationToken ct) => await postrepo.CreatePostAsync (model,ct);
+        public async Task<bool> DeletePost (int id, CancellationToken ct) =>await postrepo.DeletePostAsync (id,ct);
 
-        public bool EditPost(EditPostDTO model)
+        public async Task<bool> EditPost(EditPostDTO model, CancellationToken ct)
         {
             if (model.Title != null)
             {
-                postrepo.EditTitlePost(model);
+                await postrepo.EditTitlePost(model,ct);
             }
             if (model.Description != null)
             {
-                postrepo.EditDescriptionPost(model);
+                await postrepo.EditDescriptionPostAsync(model,ct);
             }
             if (model.CategoryId != null)
             {
-                postrepo.EditCategoryPost(model);
+              await  postrepo.EditCategoryPostAsync(model,ct);
             }
             if (model.Imag != null)
             {
-                var img = postrepo.GetPostUrl(model.Id);
-                fileservice.Delete(img);
-                model.ImgUrl = fileservice.Upload(model.Imag,"Post");
+                var img =await  postrepo.GetPostUrlAsync(model.Id,ct);
+                fileservice.Delete(img,ct);
+                model.ImgUrl =await fileservice.Upload(model.Imag,"Post",ct);
                
-                postrepo.EditImgPost(model);
+               await postrepo.EditImgPostAsync(model, ct);
             }
             return true;
         }
-        public List<PostOutputDTO> GetRecentPost(int userid) => postrepo.GetRecentPosts(userid);
-        public PostOutputDTO? GetPostById(int userid, int id) => postrepo.GetPostById(userid, id);
-        public IEnumerable<ShowPostDTO>? GetAllRecentPosts()=> postrepo.GetAllRecentPosts();
+        public async Task<List<PostOutputDTO>> GetRecentPost(int userid, CancellationToken ct) =>await postrepo.GetRecentPostsAsync(userid,ct);
+        public async Task<PostOutputDTO?> GetPostById(int userid, int id, CancellationToken ct) =>await postrepo.GetPostByIdAsync(userid, id,ct);
+        public async Task<IEnumerable<ShowPostDTO>?> GetAllRecentPosts( CancellationToken ct) =>await postrepo.GetAllRecentPostsAsync(ct);
+
+      
     }
 }

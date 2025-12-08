@@ -14,8 +14,8 @@ namespace App.Domain.Services.UserAggSrv
     public class UserService (IUserRepository _userrepo):IUserService
     {
         public string HashPassword(string password) => password.ToMd5Hex();
-        public bool ExistEmail(string email) => _userrepo.ExistEmail(email);
-        public bool Register(RegisterUserInputDTO model) => _userrepo.Register(model);
+        public async Task<bool> ExistEmail(string email, CancellationToken ct) => await _userrepo.ExistEmailAsync(email, ct);
+        public async Task<bool> Register(RegisterUserInputDTO model, CancellationToken ct) =>await _userrepo.RegisterAsync(model,ct);
         public bool EnsureEmail(string email)
         {
             if (email.Contains("@")) { return true; }
@@ -27,11 +27,12 @@ namespace App.Domain.Services.UserAggSrv
             { return false; }
             else { return true; }
         }
-        public LoginOutputUserDTO Login (string email, string password)
+        public async Task<LoginOutputUserDTO> Login (string email, string password, CancellationToken ct)
         {
-          return _userrepo.Login(email, password.ToMd5Hex());
+          return await _userrepo.LoginAsync(email, password.ToMd5Hex(),ct);
 
         }
 
+        
     }
 }

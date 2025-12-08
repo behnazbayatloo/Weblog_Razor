@@ -13,9 +13,9 @@ namespace App.Domain.AppServices.UserAggApp
 {
     public class UserAppService (IUserService _usersrvice):IUserAppService
     {
-        public Result<bool> Register(RegisterUserInputDTO model)
+        public async Task<Result<bool>> Register(RegisterUserInputDTO model, CancellationToken ct)
         {
-            var Exist = _usersrvice.ExistEmail(model.Email);
+            var Exist =await _usersrvice.ExistEmail(model.Email,ct);
             if (Exist)
             {
                 return Result<bool>.Failure("شما قبلا ثبت نام کرده اید!");
@@ -30,7 +30,7 @@ namespace App.Domain.AppServices.UserAggApp
                     return Result<bool>.Failure("پسورد یا ایمیل شما نامعتبر است! ");
                 }
                 model.HashPassword = _usersrvice.HashPassword(model.HashPassword); 
-                var result=  _usersrvice.Register(model);
+                var result= await _usersrvice.Register(model, ct);
 
                 if (result)
                 {
@@ -46,9 +46,9 @@ namespace App.Domain.AppServices.UserAggApp
         }
 
 
-        public Result<LoginOutputUserDTO> Login(string email,string password)
+        public async Task<Result<LoginOutputUserDTO>> Login(string email,string password, CancellationToken ct)
         {
-          var login=  _usersrvice.Login(email, password);
+          var login= await _usersrvice.Login(email, password, ct);
 
             if (login is not null)
             {

@@ -10,8 +10,8 @@ namespace App.Domain.Core.CategoryAgg.AppServices
 {
     public interface ICategoryAppService
     {
-        Result<bool> CreateCategory(int userid, string name);
-        Result<bool> DeleteCategory(int id);
-        IEnumerable<GetCategoryDTO> GetAll(int id);
+        Task<Result<bool>> CreateCategory(int userid, string name, CancellationToken ct);
+       Task<Result<bool>> DeleteCategory(int id, CancellationToken ct);
+        Task<IEnumerable<GetCategoryDTO>> GetAll(int id, CancellationToken ct);
     }
 }

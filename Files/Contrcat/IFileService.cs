@@ -9,8 +9,8 @@ namespace Files.Contrcat
 {
     public interface IFileService
     {
-        string Upload(IFormFile file, string folder);
-        void Delete(string fileName);
+        Task<string> Upload(IFormFile file, string folder, CancellationToken ct);
+        Task Delete(string fileName, CancellationToken ct);
 
     }
 }

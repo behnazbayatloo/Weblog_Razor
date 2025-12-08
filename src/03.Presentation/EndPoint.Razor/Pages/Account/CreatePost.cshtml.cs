@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace EndPoint.Razor.Pages.Account
 {
@@ -31,7 +32,7 @@ namespace EndPoint.Razor.Pages.Account
         public string Message { get; set; }
         [TempData]
         public string SuccessMessage { get; set; }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet(CancellationToken ct)
         {
 
            
@@ -42,8 +43,8 @@ namespace EndPoint.Razor.Pages.Account
                 // کاربر لاگین نیست
                 return RedirectToPage("/Account/Login");
             }
-            
-            Categories = category.GetAll(GetUserId()).Select(c=> new SelectListItem
+            var cat = await category.GetAll(GetUserId(), ct);
+            Categories= cat.Select(c=> new SelectListItem
             {
                 Value = c.Id.ToString(),
                 Text = c.Name
@@ -52,7 +53,7 @@ namespace EndPoint.Razor.Pages.Account
 
             return Page();
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost(CancellationToken ct)
         {
 
            
@@ -65,7 +66,7 @@ namespace EndPoint.Razor.Pages.Account
                 Title = Model.Title
                 
             };
-            var result= postAppService.CrestePost(newPost);
+            var result=await postAppService.CrestePost(newPost,ct);
             if (result.IsSuccess)
             {
                 TempData["SuccessMessage"] = result.Message;
@@ -73,8 +74,8 @@ namespace EndPoint.Razor.Pages.Account
             }
             else
             {
-                
-                Categories = category.GetAll(GetUserId()).Select(c => new SelectListItem
+                var cat = await category.GetAll(GetUserId(), ct);
+                Categories= cat.Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = c.Name

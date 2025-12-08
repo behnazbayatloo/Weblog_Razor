@@ -23,25 +23,25 @@ namespace EndPoint.Razor.Pages.Account
         [TempData]
         public string SuccessMessage { get; set; }
         
-        public void OnGet()
+        public async Task OnGet(CancellationToken ct)
         {
-            var id = cookie.GetUserId();
-            Posts = postappsrv.GetRecentPost(id).Select (p=> new PostMangementViewModel
+            var ps = await postappsrv.GetRecentPost(GetUserId(),ct);
+            Posts = ps.Select (p=> new PostMangementViewModel
             {
                 Id=p.Id,
                 Title=p.Title,
                 ImageUrl=p.Img,
                 Category=p.Category,
-                Description=p.Description.Length> 200 ? p.Description.Substring(0, 200) + "..." : p.Description,
+                Description=p.Description.Length> 10 ? p.Description.Substring(0, 10) + "..." : p.Description,
                 CreateAt=p.CreatedAt.ToPersianString("yyyy/mm/dd")
             } 
             ).ToList();
 
         }
        
-        public IActionResult OnPostDelete (int id)
+        public async Task<IActionResult> OnPostDelete (int id,CancellationToken ct)
         {
-            var result = postappsrv.DeletePost(id);
+            var result =await postappsrv.DeletePost(id,ct);
             if (result)
             {
                 Message = "پست حذف شد";

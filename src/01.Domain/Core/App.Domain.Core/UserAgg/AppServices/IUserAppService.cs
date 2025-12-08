@@ -10,7 +10,7 @@ namespace App.Domain.Core.UserAgg.AppServices
 {
     public interface IUserAppService
     {
-        Result<LoginOutputUserDTO> Login(string email, string password);
-        Result<bool> Register(RegisterUserInputDTO model);
+        Task<Result<LoginOutputUserDTO>> Login(string email, string password, CancellationToken ct);
+        Task<Result<bool>> Register(RegisterUserInputDTO model, CancellationToken ct);
     }
 }

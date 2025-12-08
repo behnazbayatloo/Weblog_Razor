@@ -10,11 +10,11 @@ namespace App.Domain.Core.PostAgg.AppServices
 {
     public interface IPostAppService
     {
-        Result<bool> CrestePost(PostInputDTO postDTO);
-        bool DeletePost(int id);
-        bool EditPost(EditPostDTO postDTO);
-        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
-        PostOutputDTO? GetPostById(int userid, int id);
-        List<PostOutputDTO> GetRecentPost(int userid);
+        Task<Result<bool>> CrestePost(PostInputDTO postDTO, CancellationToken ct);
+        Task<bool> DeletePost(int id, CancellationToken ct);
+        Task<bool> EditPost(EditPostDTO postDTO, CancellationToken ct);
+        Task<IEnumerable<ShowPostDTO>?> GetAllRecentPostsasync(CancellationToken ct);
+        Task<PostOutputDTO?> GetPostById(int userid, int id, CancellationToken ct);
+        Task<List<PostOutputDTO>> GetRecentPost(int userid, CancellationToken ct);
     }
 }

@@ -9,11 +9,11 @@ namespace App.Domain.Core.PostAgg.Services
 {
     public interface IPostService
     {
-        bool CeatePost(PostInputDTO model);
-        bool DeletePost(int id);
-        bool EditPost(EditPostDTO model);
-        IEnumerable<ShowPostDTO>? GetAllRecentPosts();
-        PostOutputDTO? GetPostById(int userid, int id);
-        List<PostOutputDTO> GetRecentPost(int userid);
+         Task<bool> CeatePost(PostInputDTO model, CancellationToken ct);
+        Task<bool> DeletePost(int id, CancellationToken ct);
+        Task<bool> EditPost(EditPostDTO model, CancellationToken ct);
+      Task< IEnumerable<ShowPostDTO>?> GetAllRecentPosts( CancellationToken ct);
+        Task<PostOutputDTO?> GetPostById(int userid, int id, CancellationToken ct);
+       Task< List<PostOutputDTO>> GetRecentPost(int userid, CancellationToken ct);
     }
 }

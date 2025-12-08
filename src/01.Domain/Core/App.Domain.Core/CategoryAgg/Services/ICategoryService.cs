@@ -9,8 +9,8 @@ namespace App.Domain.Core.CategoryAgg.Services
 {
     public interface ICategoryService
     {
-        bool CreteCategory(int userid, string categoryName);
-        bool DeleteCategory(int id);
-        IEnumerable<GetCategoryDTO> GetAll(int id);
+        Task<bool> CreteCategory(int userid, string categoryName, CancellationToken ct);
+        Task<bool> DeleteCategory(int id, CancellationToken ct);
+        Task<IEnumerable<GetCategoryDTO>> GetAll(int id, CancellationToken ct);
     }
 }

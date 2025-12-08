@@ -5,7 +5,7 @@ namespace Files.Service
 {
     public class FileService:IFileService
     {
-        public void Delete(string fileName)
+        public async Task Delete(string fileName, CancellationToken ct)
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 return;
@@ -14,11 +14,11 @@ namespace Files.Service
 
             if (File.Exists(fullPath))
             {
-                Task.Run(() => File.Delete(fullPath));
+                await Task.Run(() => File.Delete(fullPath),ct);
             }
         }
 
-        public string Upload(IFormFile file, string folder)
+        public async Task<string> Upload(IFormFile file, string folder, CancellationToken ct)
         {
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files", folder);
 
@@ -28,9 +28,9 @@ namespace Files.Service
             var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))
+           await using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))
             {
-                file.CopyToAsync(stream);
+             await   file.CopyToAsync(stream,ct);
             }
 
             return Path.Combine("Files", folder, uniqueFileName);
