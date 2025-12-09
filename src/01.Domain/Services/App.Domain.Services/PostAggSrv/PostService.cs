@@ -33,7 +33,7 @@ namespace App.Domain.Services.PostAggSrv
             if (model.Imag != null)
             {
                 var img =await  postrepo.GetPostUrlAsync(model.Id,ct);
-                fileservice.Delete(img,ct);
+               await fileservice.Delete(img,ct);
                 model.ImgUrl =await fileservice.Upload(model.Imag,"Post",ct);
                
                await postrepo.EditImgPostAsync(model, ct);
