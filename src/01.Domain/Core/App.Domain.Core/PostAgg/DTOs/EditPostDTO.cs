@@ -14,8 +14,8 @@ namespace App.Domain.Core.PostAgg.DTOs
         public string Title { get; set; }
         public string Description { get; set; }
         public int CategoryId {  get; set; }
-        public IFormFile Imag {  get; set; }
-        public string ImgUrl { get; set; }
+        public IFormFile? Imag {  get; set; }
+        public string? ImgUrl { get; set; }
 
     }
 }

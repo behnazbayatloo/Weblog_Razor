@@ -5,6 +5,7 @@ using App.Domain.Core.CommentAgg.Entities;
 using App.Domain.Core.PostAgg.Entities;
 using App.Domain.Core.UserAgg.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 namespace App.Infra.Data.Db.SqlServer.Ef.DbCxt
 {
     public class AppDbContext : DbContext
@@ -15,6 +16,8 @@ namespace App.Infra.Data.Db.SqlServer.Ef.DbCxt
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.ConfigureWarnings(warnings =>
+    warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
             base.OnConfiguring(optionsBuilder);
         }
 

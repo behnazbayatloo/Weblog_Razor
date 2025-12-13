@@ -3,6 +3,7 @@ using App.Domain.Core.CategoryAgg.DTOs;
 using App.Domain.Core.PostAgg.AppServices;
 using App.Domain.Core.PostAgg.DTOs;
 using EndPoint.Razor.Extentions;
+using EndPoint.Razor.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,14 +19,14 @@ namespace EndPoint.Razor.Pages.Account
         [Required(ErrorMessage = "پر کردن این فیلد الزامیست")]
         public string Description { get; set; }
         [Required(ErrorMessage = "پر کردن این فیلد الزامیست")]
-        public IFormFile? ImageUrl { get; set; }
+        public IFormFile? ImageFile { get; set; }
         public int CategoryId { get; set; }
     }
    
     public class CreatePostModel (IPostAppService postAppService, ICategoryAppService category,ICookieService cookie): BasePageModel
     {
         [BindProperty]
-        public CreatePostViewModel Model { get; set; }
+        public CreatePostViewModel CPost { get; set; }
         
         public List<SelectListItem> Categories { get; set; }
          
@@ -50,7 +51,7 @@ namespace EndPoint.Razor.Pages.Account
                 Text = c.Name
 
             }).ToList();
-
+           
             return Page();
         }
         public async Task<IActionResult> OnPost(CancellationToken ct)
@@ -60,10 +61,10 @@ namespace EndPoint.Razor.Pages.Account
             var newPost = new PostInputDTO
             {
                 UserId = GetUserId(),
-                CategoryId=Model.CategoryId,
-                Description = Model.Description,
-                Img = Model.ImageUrl,
-                Title = Model.Title
+                CategoryId=CPost.CategoryId,
+                Description = CPost.Description,
+                Img = CPost.ImageFile,
+                Title = CPost.Title
                 
             };
             var result=await postAppService.CrestePost(newPost,ct);

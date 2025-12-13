@@ -16,23 +16,29 @@
 }
 <form method="post" class="bg-white p-4 rounded shadow-sm" enctype="multipart/form-data">
     <div class="mb-3">
-        <label asp-for="Model.Title" class="form-label">عنوان پست</label>
-        <input asp-for="Model.Title" type="text" class="form-control"  required />
+        <label asp-for="CPost.Title" class="form-label">عنوان پست</label>
+        <input asp-for="CPost.Title" type="text" class="form-control" required />
     </div>
 
     <div class="mb-3">
-        <label asp-for="Model.CategoryId" class="form-label">دسته‌بندی</label>
-        <select asp-for="Model.CategoryId" asp-items="Model.Categories" class="form-control">
+        <label asp-for="CPost.CategoryId" class="form-label">دسته‌بندی</label>
+        <select asp-for="CPost.CategoryId" asp-items="Model.Categories" class="form-control">
             <option value="">-- انتخاب کنید --</option>
         </select>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Model.Description" class="form-label">متن پست</label>
-        <textarea asp-for="Model.Description" class="form-control" rows="8" required></textarea>
+        <label asp-for="CPost.Description" class="form-label">متن پست</label>
+        <textarea asp-for="CPost.Description" class="form-control" rows="8" required></textarea>
     </div>
-    <label asp-for="Model.ImageUrl">انتخاب عکس:</label>
-    <input asp-for="Model.ImageUrl" type="file"  accept="image/*" />
+    <div class="form-group">
+        <label asp-for="CPost.ImageFile">انتخاب تصویر (JPEG، حداکثر 2MB)</label>
+        <input type="file" asp-for="CPost.ImageFile" id="imageInput" accept="image/jpeg" class="form-control" />
+        <span asp-validation-for="CPost.ImageFile" class="text-danger"></span>
+    </div>
+   @*  @Html.Partial("_ImageUploadPartial", Model.CPost.ImageFile)
+    @Html.EditorFor(m => m.CPost.ImageFile) *@
+
     <button type="submit" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> انتشار پست
     </button>

@@ -1,0 +1,12 @@
+﻿@using EndPoint.Razor.Models.ViewModels
+
+
+@model ImageUploadViewModel
+
+<div class="form-group">
+   
+
+    <label asp-for="ImageFile">انتخاب تصویر (JPEG، حداکثر 2MB)</label>
+    <input type="file" asp-for="ImageFile" accept="image/jpeg" class="form-control" />
+    <span asp-validation-for="ImageFile" class="text-danger"></span>
+</div>

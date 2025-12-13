@@ -26,8 +26,15 @@
                       ? "/images/default.png"
                       : Model.Post.ImageUrl)"
          alt="عکس پست" class="img-fluid" />
-    <label asp-for="Post.ImgFile">انتخاب عکس:</label>
-    <input asp-for="Post.ImgFile" type="file" accept="image/*" />
+    <div class="form-group">
+
+
+        <label asp-for="Post.ImageFile">انتخاب تصویر (JPEG، حداکثر 2MB)</label>
+        <input type="file" asp-for="Post.ImageFile" id="imageInput" accept="image/jpeg" class="form-control" />
+        <span asp-validation-for="Post.ImageFile" class="text-danger"></span>
+    </div>
+   @*  @Html.Partial("_ImageUploadPartial", Model.Post.ImageFile)
+    @Html.EditorFor(m => m.Post.ImageFile) *@
     <button type="submit" class="btn btn-primary">
         <i class="bi bi-plus-circle"></i> ویرایش
     </button>

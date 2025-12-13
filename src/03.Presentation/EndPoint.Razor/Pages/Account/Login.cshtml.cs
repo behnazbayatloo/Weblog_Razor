@@ -39,6 +39,7 @@ namespace EndPoint.Razor.Pages.Account
             else
             {
                 Message = loginResult.Message;
+                return Page();
             }
 
 

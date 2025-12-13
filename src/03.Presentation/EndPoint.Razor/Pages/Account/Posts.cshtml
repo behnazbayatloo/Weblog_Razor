@@ -53,3 +53,21 @@
         </div>
     }
 </div>
+<script>
+    document.getElementById("imageInput").addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            // بررسی حجم (2 مگابایت = 2 * 1024 * 1024 بایت)
+            if (file.size > 2 * 1024 * 1024) {
+                alert("حجم فایل نباید بیشتر از 2 مگابایت باشد.");
+                this.value = ""; // پاک کردن انتخاب
+            }
+
+            // بررسی نوع فایل
+            if (file.type !== "image/jpeg") {
+                alert("فقط فایل JPEG مجاز است.");
+                this.value = "";
+            }
+        }
+    });
+</script>

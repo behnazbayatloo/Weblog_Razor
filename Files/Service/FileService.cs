@@ -33,7 +33,7 @@ namespace Files.Service
              await   file.CopyToAsync(stream,ct);
             }
 
-            return Path.Combine("Files", folder, uniqueFileName);
+            return $"/Files/{folder}/{uniqueFileName}";
         }
     }
 }

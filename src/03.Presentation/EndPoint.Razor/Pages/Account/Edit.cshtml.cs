@@ -4,6 +4,7 @@ using App.Domain.Core.PostAgg.AppServices;
 using App.Domain.Core.PostAgg.DTOs;
 using App.Domain.Core.PostAgg.Entities;
 using EndPoint.Razor.Extentions;
+using EndPoint.Razor.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,7 +21,7 @@ namespace EndPoint.Razor.Pages.Account
         
         public string Description { get; set; }
         public int CategoryId { get; set; }
-        public IFormFile? ImgFile { get; set; } 
+        public IFormFile? ImageFile { get; set; } 
     }
 
     public class EditModel (IPostAppService postApp ,ICategoryAppService category) : BasePageModel
@@ -46,6 +47,7 @@ namespace EndPoint.Razor.Pages.Account
             ImageUrl=model.Img,
             
             };
+           
 
         }
         public async Task<IActionResult> OnPost (CancellationToken ct)
@@ -56,7 +58,7 @@ namespace EndPoint.Razor.Pages.Account
                 Title = Post.Title,
                 CategoryId=Post.CategoryId,
                 Description = Post.Description,
-                Imag=Post.ImgFile
+                Imag=Post.ImageFile
 
             };
             var result =await postApp.EditPost(newPost,ct);
